@@ -107,26 +107,18 @@ Function Accept-EULA() {
     Log-Message "considerations, and that this example may make assumptions which may not be valid in your" -Level "EULA"
     Log-Message "environment or organization." -Level "EULA"
     Log-Message "" -Level "EULA"
-    Log-Message "Press any key to accept all terms and risk. Use CTRL+C to exit." -Level "EULA"
+    Log-Message "Type 'yes' to accept all terms and risk. Type 'no' to exit." -Level "EULA"
 
-    $null = $host.UI.RawUI.FlushInputBuffer()
-    while ($true) {
-        $key = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
-        if ($key.Character -match '[a-zA-Z0-9 ]') {
-            break
-        }
+    $response = Read-Host "Do you accept the EULA? (yes/no)"
+    if ($response -ne "yes") {
+        Log-Message "EULA not accepted. Exiting script." -Level "ERROR"
+        Exit
     }
 }
 
 Function Do-Pause() {
-    Log-Message "Check the vSphere Client to make sure all tasks have completed, then press a key." -Level "INFO"
-    $null = $host.UI.RawUI.FlushInputBuffer()
-    while ($true) {
-        $key = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
-        if ($key.Character -match '[a-zA-Z0-9 ]') {
-            break
-        }
-    }
+    Log-Message "Check the vSphere Client to make sure all tasks have completed, then press Enter to continue." -Level "INFO"
+    Read-Host "Press Enter to continue"
 }
 
 #####################
@@ -186,7 +178,7 @@ else {
 
 # Safety checks
 if ($false -eq $NoSafetyChecks) {
-    Check-PowerCLI
+    #Check-PowerCLI
     Check-ESXiConnection
     Check-Hosts
 }
