@@ -248,7 +248,7 @@ foreach ($param in $scg_adv.GetEnumerator() ) {
 $scg_not = @{
 
     'Annotations.WelcomeMessage' = ''
-    'Config.Etc.Issue'           = ''
+    'Config.Etc.issue'           = ''
     'Syslog.global.logHost'      = ''
 
 }
